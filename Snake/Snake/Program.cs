@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Snake
 {
@@ -66,24 +67,56 @@ namespace Snake
 
             player.PlayerStartPosition();
 
-            while (true)
-            {               
-              
-                while (foods.Count < 3)
+            var direction = "Right";
+
+            var isGameOver = false;
+
+            while (isGameOver != true)
+            {                  
+               
+                while (isGameOver != true)
                 {
-                    SetFood();
+
+                    while (foods.Count < 3)
+                    {
+                        SetFood();
+                    }
+
+                    Thread.Sleep(100);
+
+                    if (Console.KeyAvailable)
+                    {
+                        var info = Console.ReadKey(true);
+
+                        var key = info.Key;
+
+                        direction = GetPlayerDirection(direction, key);
+                    }                    
+
+                    var (xValue, yValue) = GetNewPosition(direction, player.xPosition, player.yPosition);
+
+                    PrintInConsole(' ', player.xPosition, player.yPosition);
+
+                    player.xPosition = xValue;
+                    player.yPosition = yValue;
+
+                    PrintInConsole('@', player.xPosition, player.yPosition);
+
+                    if (player.xPosition == 0 || player.xPosition == 80 || player.yPosition == 0 || player.yPosition == 30)
+                    {
+                        isGameOver = true;
+                    }
+
+                    foreach (var food in foods)
+                    {
+                        if (player.xPosition == food.xPosition && player.yPosition == food.yPosition)
+                        {
+                            PrintInConsole('@', player.xPosition, player.yPosition);
+                            foods.Remove(food);
+                            break;
+                        }
+                    }
                 }                
-
-                var direction = GetPlayerDirection();
-
-                var (xValue, yValue) = GetNewPosition( direction, player.xPosition, player.yPosition);
-
-                PrintInConsole(' ', player.xPosition, player.yPosition);
-
-                player.xPosition = xValue;
-                player.yPosition = yValue;
-
-                PrintInConsole('@', player.xPosition, player.yPosition);
             }           
         }
 
@@ -116,23 +149,21 @@ namespace Snake
             return (xValue, yValue);
         }
         
-        private static string GetPlayerDirection()
-        {
-            var direction = "";
-
-            if (Console.ReadKey().Key == ConsoleKey.UpArrow)
+        private static string GetPlayerDirection(string direction, ConsoleKey key)
+        {  
+            if (key == ConsoleKey.UpArrow)
             {
                 direction = "Up";
             }
-            else if (Console.ReadKey().Key == ConsoleKey.DownArrow)
+            else if (key == ConsoleKey.DownArrow)
             {
                 direction = "Down";
             } 
-            else if (Console.ReadKey().Key == ConsoleKey.LeftArrow)
+            else if (key == ConsoleKey.LeftArrow)
             {
                 direction = "Left";
             }
-            else if (Console.ReadKey().Key == ConsoleKey.RightArrow)
+            else if (key == ConsoleKey.RightArrow)
             {
                 direction = "Right";
             };
