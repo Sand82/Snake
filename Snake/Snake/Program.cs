@@ -62,23 +62,83 @@ namespace Snake
         {
             Player player = new Player(40, 15);
 
+            DrawABox(0, 0, 80, 30, '|', '-', "test test");
+
+            player.PlayerStartPosition();
+
             while (true)
-            {                
-
-                DrawABox(0, 0, 80, 30, '|', '-', "test test");
-
+            {               
+              
                 while (foods.Count < 3)
                 {
                     SetFood();
-                }
+                }                
 
-                player.PlayerStartPosition();
+                var direction = GetPlayerDirection();
 
-                //ConsoleKey.                
+                var (xValue, yValue) = GetNewPosition( direction, player.xPosition, player.yPosition);
 
-               Console.ReadKey();
+                PrintInConsole(' ', player.xPosition, player.yPosition);
+
+                player.xPosition = xValue;
+                player.yPosition = yValue;
+
+                PrintInConsole('@', player.xPosition, player.yPosition);
             }           
-        }        
+        }
+
+        private static void PrintInConsole( char symbol, int xPosition, int yPosition)
+        {
+            Console.SetCursorPosition(xPosition, yPosition);
+            Console.Write(symbol);
+        }
+        
+        private static (int, int) GetNewPosition(string direction, int xValue, int yValue)
+        {                    
+            Dictionary<string, int> directionValues = new Dictionary<string, int>()
+            {            
+                { "Up", - 1 },
+                { "Down", 1 },
+                { "Left", - 1 },
+                { "Right",  1 },
+            };
+
+            if (direction == "Up" || direction == "Down")
+            {
+                yValue += directionValues[direction];
+            }
+
+            if (direction == "Left" || direction == "Right")
+            {
+                xValue += directionValues[direction];
+            }
+
+            return (xValue, yValue);
+        }
+        
+        private static string GetPlayerDirection()
+        {
+            var direction = "";
+
+            if (Console.ReadKey().Key == ConsoleKey.UpArrow)
+            {
+                direction = "Up";
+            }
+            else if (Console.ReadKey().Key == ConsoleKey.DownArrow)
+            {
+                direction = "Down";
+            } 
+            else if (Console.ReadKey().Key == ConsoleKey.LeftArrow)
+            {
+                direction = "Left";
+            }
+            else if (Console.ReadKey().Key == ConsoleKey.RightArrow)
+            {
+                direction = "Right";
+            };
+
+            return direction;
+        }
 
         private static void SetFood()
         {
