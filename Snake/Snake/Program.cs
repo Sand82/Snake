@@ -2,56 +2,7 @@
 using System.Threading;
 
 namespace Snake
-{
-    public class Player
-    {
-        public Player(int xPosition, int yPosition)
-        {
-            this.xPosition = xPosition;
-            this.yPosition = yPosition;
-        }
-
-        public int xPosition { get; set; }
-
-        public int yPosition { get; set; }
-
-        public void PlayerStartPosition()
-        {
-            Console.SetCursorPosition(xPosition, yPosition);
-            Console.WriteLine('@');
-        }
-
-        public void ChangePlayerPosition(int xPosition, int yPosition, int xMove, int yMove)
-        {
-            Console.SetCursorPosition(xPosition, yPosition);
-            Console.WriteLine(' ');
-
-            if (xPosition == xMove)
-            {
-                yPosition = yMove;
-            }
-            else
-            {
-                xPosition = xMove;
-            }
-
-            Console.SetCursorPosition(xPosition, yPosition);
-            Console.WriteLine('@');
-        }
-    }
-
-    public class Food
-    {
-        public Food(int xPosition, int yPosition)
-        {
-            this.xPosition = xPosition;
-            this.yPosition = yPosition;  
-        }
-
-        public int xPosition { get; set; }
-
-        public int yPosition { get; set; }
-    }
+{  
 
     public class Program
     {
@@ -61,28 +12,33 @@ namespace Snake
 
         public static void Main(string[] args)
         {
-            Player player = new Player(40, 15);
+            Snake snake = new Snake();
 
             DrawABox(0, 0, 80, 30, '|', '-', "test test");
 
-            player.PlayerStartPosition();
+            PrintInConsole('@', snake.Head.xPosition, snake.Head.yPosition);
 
             var direction = "Right";
 
             var isGameOver = false;
 
+            var testFood = new Food(41, 15);
+
+            Console.SetCursorPosition(testFood.xPosition, testFood.yPosition);
+            Console.WriteLine(food);
+
+            foods.Add(testFood);
+
             while (isGameOver != true)
-            {                  
-               
+            { 
                 while (isGameOver != true)
                 {
-
                     while (foods.Count < 3)
-                    {
+                    {                        
                         SetFood();
                     }
 
-                    Thread.Sleep(100);
+                    Thread.Sleep(500);
 
                     if (Console.KeyAvailable)
                     {
@@ -93,60 +49,47 @@ namespace Snake
                         direction = GetPlayerDirection(direction, key);
                     }                    
 
-                    var (xValue, yValue) = GetNewPosition(direction, player.xPosition, player.yPosition);
+                    var (xValue, yValue) = GetNewPosition(direction);
 
-                    PrintInConsole(' ', player.xPosition, player.yPosition);
+                    var nextXPosition = snake.Head.xPosition + xValue;
+                    var nextYPosition = snake.Head.yPosition + yValue;
 
-                    player.xPosition = xValue;
-                    player.yPosition = yValue;
-
-                    PrintInConsole('@', player.xPosition, player.yPosition);
-
-                    if (player.xPosition == 0 || player.xPosition == 80 || player.yPosition == 0 || player.yPosition == 30)
+                    if (snake.Head.xPosition == 0 || snake.Head.xPosition == 80 || snake.Head.yPosition == 0 || snake.Head.yPosition == 30)
                     {
                         isGameOver = true;
                     }
 
                     foreach (var food in foods)
                     {
-                        if (player.xPosition == food.xPosition && player.yPosition == food.yPosition)
+                        if (nextXPosition == food.xPosition && nextYPosition == food.yPosition)
                         {
-                            PrintInConsole('@', player.xPosition, player.yPosition);
                             foods.Remove(food);
+                            snake.AddBodyElemen(food.xPosition, food.yPosition);
                             break;
                         }
                     }
+
+                    snake.MoveSnake(xValue, yValue);                                
                 }                
             }           
         }
-
-        private static void PrintInConsole( char symbol, int xPosition, int yPosition)
-        {
-            Console.SetCursorPosition(xPosition, yPosition);
-            Console.Write(symbol);
-        }
         
-        private static (int, int) GetNewPosition(string direction, int xValue, int yValue)
-        {                    
-            Dictionary<string, int> directionValues = new Dictionary<string, int>()
+        private static (int, int) GetNewPosition(string direction)
+        {             
+            Dictionary<string, string> directionValues = new Dictionary<string, string>()
             {            
-                { "Up", - 1 },
-                { "Down", 1 },
-                { "Left", - 1 },
-                { "Right",  1 },
+                { "Up", "-1, 0" },
+                { "Down", "1, 0" },
+                { "Left", "0, -1" },
+                { "Right", "0, 1" },
             };
 
-            if (direction == "Up" || direction == "Down")
-            {
-                yValue += directionValues[direction];
-            }
+            var tokens = directionValues[direction]
+                .Split(", ")
+                .Select(int.Parse)
+                .ToArray();
 
-            if (direction == "Left" || direction == "Right")
-            {
-                xValue += directionValues[direction];
-            }
-
-            return (xValue, yValue);
+            return (tokens[1], tokens[0]);
         }
         
         private static string GetPlayerDirection(string direction, ConsoleKey key)
@@ -227,6 +170,12 @@ namespace Snake
                     }
                 }
             }
+        }
+
+        private static void PrintInConsole(char symbol, int xPosition, int yPosition)
+        {
+            Console.SetCursorPosition(xPosition, yPosition);
+            Console.Write(symbol);
         }
     }
 }
