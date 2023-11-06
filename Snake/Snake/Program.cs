@@ -17,17 +17,10 @@ namespace Snake
             DrawABox(0, 0, 80, 30, '|', '-', "test test");
 
             PrintInConsole('@', snake.Head.xPosition, snake.Head.yPosition);
-
+            PrintInConsole(' ', snake.Head.xPosition, snake.Head.yPosition);
             var direction = "Right";
 
             var isGameOver = false;
-
-            var testFood = new Food(41, 15);
-
-            Console.SetCursorPosition(testFood.xPosition, testFood.yPosition);
-            Console.WriteLine(food);
-
-            foods.Add(testFood);
 
             while (isGameOver != true)
             { 
@@ -38,7 +31,7 @@ namespace Snake
                         SetFood();
                     }
 
-                    Thread.Sleep(500);
+                    Thread.Sleep(300);
 
                     if (Console.KeyAvailable)
                     {
@@ -63,13 +56,22 @@ namespace Snake
                     {
                         if (nextXPosition == food.xPosition && nextYPosition == food.yPosition)
                         {
-                            foods.Remove(food);
+                            foods.Remove(food);                            
                             snake.AddBodyElemen(food.xPosition, food.yPosition);
                             break;
                         }
                     }
 
-                    snake.MoveSnake(xValue, yValue);                                
+                    foreach (var snakePart in snake.Body.Skip(1))
+                    {
+                        if (snake.Head.xPosition == snakePart.xPosition && snake.Head.yPosition == snakePart.yPosition)
+                        {
+                            isGameOver = true;
+                            break;
+                        }
+                    }
+
+                    snake.MoveSnake(xValue, yValue);                    
                 }                
             }           
         }

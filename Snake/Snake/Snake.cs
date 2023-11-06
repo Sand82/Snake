@@ -52,11 +52,10 @@
                     item.yPosition = lastYPosition;
                     lastYPosition = tempY;
                     PrintInConsole('@', item.xPosition, item.yPosition);
-                }
-                
+                }                
+                PrintInConsole(' ', lastXPosition, lastYPosition);
+                               
             }
-            PrintInConsole(' ', lastXPosition, lastYPosition);
-            
         }
 
         private static void PrintInConsole(char symbol, int xPosition, int yPosition)
