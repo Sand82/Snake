@@ -2,11 +2,13 @@
 {
     public class Food
     {
+        public char foodSymbol = '#';
+
         public Food(int xPosition, int yPosition)
         {
             this.xPosition = xPosition;
             this.yPosition = yPosition;
-        }
+        }        
 
         public int xPosition { get; set; }
 
