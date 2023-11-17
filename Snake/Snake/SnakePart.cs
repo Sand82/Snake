@@ -1,15 +1,11 @@
-﻿namespace Snake
+﻿using Snake.Contracts;
+
+namespace Snake
 {
-    public class SnakePart
+    public class SnakePart : Cordinates
     {
-        public SnakePart(int xPosition, int yPosition)
-        {
-            this.xPosition = xPosition;
-            this.yPosition = yPosition;
-        }
-
-        public int xPosition { get; set; }
-
-        public int yPosition { get; set; }
+        public SnakePart(int xPosition, int yPosition) 
+            : base(xPosition, yPosition)
+        {}
     }
 }

@@ -6,8 +6,15 @@ namespace Snake
     {
         private const string right = "Right";
         private const string left = "Left";
-        private const string up = "up";
+        private const string up = "Up";
         private const string down = "Down";
+
+        private int boardStartPossitionX = 0;
+        private int boardStartPossitionY = 0;
+        private int boardWidth = 80;
+        private int boardHeight = 30;
+        private char edgeX = '|';
+        private char edgeY = '-';
 
         private List<Food> foods = new();
 
@@ -15,19 +22,7 @@ namespace Snake
 
         private bool isGameOver = false;
 
-        private IWriter writer;
-
-        private int boardStartPossitionX = 0;
-
-        private int boardStartPossitionY = 0;
-
-        private int boardWidth = 80;
-
-        private int boardHeight = 30;
-
-        private char edgeX = '|';
-
-        private char edgeY = '-';
+        private IWriter writer;        
 
         public Game(Snake snake, IWriter writer )
         {
@@ -39,64 +34,119 @@ namespace Snake
 
         public void Run()
         {
-            DrawABox("test test");
+            DrawBorders("test test");
 
             writer.PrintInConsole('@', Snake.Head.xPosition, Snake.Head.yPosition);
-            writer.PrintInConsole(' ', Snake.Head.xPosition, Snake.Head.yPosition);
+            writer.PrintInConsole(' ', Snake.Head.xPosition, Snake.Head.yPosition);            
 
             while (isGameOver != true)
             {
-                while (isGameOver != true)
+                GamePipeLine();
+            }
+
+            writer.SetCursorPosition(0,32);
+
+            writer.Write("Game Over!");
+        }
+
+        private void GamePipeLine()
+        {
+            var oldDirection = string.Empty;
+
+            while (isGameOver != true)
+            {
+                oldDirection = direction;
+
+                while (foods.Count < 3)
                 {
-                    while (foods.Count < 3)
-                    {
-                        SetFood();
-                    }
+                    SetFood();
+                }
 
-                    Thread.Sleep(100);
+                Thread.Sleep(200);
 
-                    if (writer.KeyAvailable())
-                    {
-                        var key = writer.Key();
+                if (writer.KeyAvailable())
+                {
+                    var key = writer.Key();
 
-                        direction = GetPlayerDirection(direction, key);
-                    }
+                    GetSnakeDirection(key);
 
-                    var (xValue, yValue) = GetNewPosition(direction);
+                    ValidateDirection(key, oldDirection);
+                }
 
-                    var nextXPosition = Snake.Head.xPosition + xValue;
-                    var nextYPosition = Snake.Head.yPosition + yValue;
+                var (xValue, yValue) = GetNewPosition(direction);
 
-                    if (nextXPosition == boardStartPossitionX ||
-                        nextXPosition == boardWidth ||
-                        nextYPosition == boardStartPossitionY ||
-                        nextYPosition == boardHeight)
-                    {
-                        isGameOver = true;
-                    }
+                var nextXPosition = GetNextStep(Snake.Head.xPosition, xValue);
+                var nextYPosition = GetNextStep(Snake.Head.yPosition, yValue);
 
-                    foreach (var food in foods)
-                    {
-                        if (nextXPosition == food.xPosition && nextYPosition == food.yPosition)
-                        {
-                            foods.Remove(food);
-                            Snake.AddBodyElemen(food.xPosition, food.yPosition);
-                            break;
-                        }
-                    }
+                isGameOver = ValidateNextStep(nextXPosition, nextYPosition);
 
-                    foreach (var snakePart in Snake.Body.Skip(1))
-                    {
-                        if (Snake.Head.xPosition == snakePart.xPosition && Snake.Head.yPosition == snakePart.yPosition)
-                        {
-                            isGameOver = true;
-                            break;
-                        }
-                    }
+                CheckForEatenFood(nextXPosition, nextYPosition);
 
-                    Snake.MoveSnake(xValue, yValue);
+                CheckSnakeForSelfBite(nextXPosition, nextYPosition);
+
+                Snake.MoveSnake(xValue, yValue);
+            }
+        }
+
+        private void ValidateDirection(ConsoleKey key , string oldDirection)
+        {
+            if (oldDirection == left && key == ConsoleKey.RightArrow)
+            {
+                direction = left;                
+            }
+
+            if (oldDirection == right && key == ConsoleKey.LeftArrow)
+            {
+                direction = right;
+            }
+
+            if (oldDirection == up && key == ConsoleKey.DownArrow)
+            {
+                direction = up;
+            }
+
+            if (oldDirection == down && key == ConsoleKey.UpArrow)
+            {
+                direction = down;
+            }
+        }
+
+        private void CheckSnakeForSelfBite(int nextXPosition, int nextYPosition)
+        {
+            foreach (var snakePart in Snake.Body.Skip(1))
+            {
+                if (Snake.Head.xPosition == snakePart.xPosition && Snake.Head.yPosition == snakePart.yPosition)
+                {
+                    isGameOver = true;
+                    break;
                 }
             }
+        }
+
+        private void CheckForEatenFood(int nextXPosition, int nextYPosition)
+        {
+            foreach (var food in foods)
+            {
+                if (nextXPosition == food.xPosition && nextYPosition == food.yPosition)
+                {
+                    foods.Remove(food);
+                    Snake.AddBodyElemen(food.xPosition, food.yPosition);
+                    break;
+                }
+            }
+        }
+
+        private int GetNextStep(int headPosition, int step)
+        {
+            return step + headPosition;
+        }
+
+        private bool ValidateNextStep(int nextXPosition, int nextYPosition)
+        {
+            return nextXPosition == boardStartPossitionX ||
+                        nextXPosition == boardWidth ||
+                        nextYPosition == boardStartPossitionY ||
+                        nextYPosition == boardHeight;
         }
 
         private (int, int) GetNewPosition(string direction)
@@ -117,26 +167,24 @@ namespace Snake
             return (tokens[1], tokens[0]);
         }
 
-        private string GetPlayerDirection(string direction, ConsoleKey key)
+        private void GetSnakeDirection( ConsoleKey key)
         {
-            if (key == ConsoleKey.UpArrow)
+            if (key == ConsoleKey.UpArrow )
             {
-                direction = "Up";
+                direction = up;
             }
             else if (key == ConsoleKey.DownArrow)
             {
-                direction = "Down";
+                direction = down;
             }
             else if (key == ConsoleKey.LeftArrow)
             {
-                direction = "Left";
+                direction = left;
             }
             else if (key == ConsoleKey.RightArrow)
             {
-                direction = "Right";
-            };
-
-            return direction;
+                direction = right;
+            };            
         }
 
         private void SetFood()
@@ -155,7 +203,7 @@ namespace Snake
             foods.Add(food);
         }        
 
-        private void DrawABox(string message)
+        private void DrawBorders(string message)
         {
             int lastIndex = 0;
             writer.SetCursorPosition(boardStartPossitionX, boardStartPossitionY);
