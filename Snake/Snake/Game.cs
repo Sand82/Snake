@@ -1,26 +1,48 @@
-﻿namespace Snake
-{
+﻿using Snake.Contracts;
+
+namespace Snake
+{  
     public class Game
     {
+        private const string right = "Right";
+        private const string left = "Left";
+        private const string up = "up";
+        private const string down = "Down";
+
         private List<Food> foods = new();
 
-        private string direction = "Right";
+        private string direction = right;
 
         private bool isGameOver = false;
 
-        public Game(Snake snake )
+        private IWriter writer;
+
+        private int boardStartPossitionX = 0;
+
+        private int boardStartPossitionY = 0;
+
+        private int boardWidth = 80;
+
+        private int boardHeight = 30;
+
+        private char edgeX = '|';
+
+        private char edgeY = '-';
+
+        public Game(Snake snake, IWriter writer )
         {
             this.Snake = snake;
+            this.writer = writer;
         }
 
         public Snake Snake { get; set; }
 
         public void Run()
         {
-            DrawABox(0, 0, 80, 30, '|', '-', "test test");
+            DrawABox("test test");
 
-            PrintInConsole('@', Snake.Head.xPosition, Snake.Head.yPosition);
-            PrintInConsole(' ', Snake.Head.xPosition, Snake.Head.yPosition);
+            writer.PrintInConsole('@', Snake.Head.xPosition, Snake.Head.yPosition);
+            writer.PrintInConsole(' ', Snake.Head.xPosition, Snake.Head.yPosition);
 
             while (isGameOver != true)
             {
@@ -31,13 +53,11 @@
                         SetFood();
                     }
 
-                    Thread.Sleep(300);
+                    Thread.Sleep(100);
 
-                    if (Console.KeyAvailable)
+                    if (writer.KeyAvailable())
                     {
-                        var info = Console.ReadKey(true);
-
-                        var key = info.Key;
+                        var key = writer.Key();
 
                         direction = GetPlayerDirection(direction, key);
                     }
@@ -47,7 +67,10 @@
                     var nextXPosition = Snake.Head.xPosition + xValue;
                     var nextYPosition = Snake.Head.yPosition + yValue;
 
-                    if (Snake.Head.xPosition == 0 || Snake.Head.xPosition == 80 || Snake.Head.yPosition == 0 || Snake.Head.yPosition == 30)
+                    if (nextXPosition == boardStartPossitionX ||
+                        nextXPosition == boardWidth ||
+                        nextYPosition == boardStartPossitionY ||
+                        nextYPosition == boardHeight)
                     {
                         isGameOver = true;
                     }
@@ -80,10 +103,10 @@
         {
             Dictionary<string, string> directionValues = new Dictionary<string, string>()
             {
-                { "Up", "-1, 0" },
-                { "Down", "1, 0" },
-                { "Left", "0, -1" },
-                { "Right", "0, 1" },
+                { up, "-1, 0" },
+                { down, "1, 0" },
+                { left, "0, -1" },
+                { right, "0, 1" },
             };
 
             var tokens = directionValues[direction]
@@ -127,53 +150,46 @@
 
             var food = new Food(xValue, yValue);
 
-            Console.SetCursorPosition(xValue, yValue);
-            Console.WriteLine(food.foodSymbol);
+            writer.PrintInConsole(food.foodSymbol, xValue, yValue);
 
             foods.Add(food);
-        }
+        }        
 
-        private static void PrintInConsole(char symbol, int xPosition, int yPosition)
+        private void DrawABox(string message)
         {
-            Console.SetCursorPosition(xPosition, yPosition);
-            Console.Write(symbol);
-        }
-
-        private void DrawABox(int x, int y, int width, int height, char EdgeX, char EdgeY, string Message)
-        {
-            int LastIndex = 0;
-            Console.SetCursorPosition(x, y);
-            for (int h_i = 0; h_i <= height; h_i++)
+            int lastIndex = 0;
+            writer.SetCursorPosition(boardStartPossitionX, boardStartPossitionY);
+            for (int h_i = 0; h_i <= boardHeight; h_i++)
             {
-                if (LastIndex != -1)
+                if (lastIndex != -1)
                 {
-                    int seaindex = (LastIndex + (width - 1));
-                    if (seaindex >= Message.Length - 1)
-                        seaindex = Message.Length - 1;
-                    int newIndex = Message.LastIndexOf(' ', seaindex);
+                    int seaindex = (lastIndex + (boardWidth - 1));
+                    if (seaindex >= message.Length - 1)
+                        seaindex = message.Length - 1;
+                    int newIndex = message.LastIndexOf(' ', seaindex);
                     if (newIndex == -1)
-                        newIndex = Message.Length - 1;
-                    string substr = Message.Substring(LastIndex, newIndex - LastIndex);
-                    LastIndex = newIndex;
-                    Console.SetCursorPosition(x + 1, y + h_i);
-                    Console.Write(substr);
+                        newIndex = message.Length - 1;
+                    string substr = message.Substring(lastIndex, newIndex - lastIndex);
+                    lastIndex = newIndex;
+                    writer.SetCursorPosition(boardStartPossitionX + 1, boardStartPossitionY + h_i);
+                    writer.Write(substr);
                 }
 
-                var maxYRol = width;
+                var maxYRol = boardWidth;
 
-                for (int w_i = 0; w_i <= width; w_i++)
+                for (int w_i = 0; w_i <= boardWidth; w_i++)
                 {
-                    if (h_i % height == 0 || w_i % width == 0)
+                    if (h_i % boardHeight == 0 || w_i % boardWidth == 0)
                     {
-                        Console.SetCursorPosition(x + w_i, y + h_i);
+                        writer.SetCursorPosition(boardStartPossitionX + w_i, boardStartPossitionY + h_i);
 
                         if (w_i == 0 || w_i == maxYRol)
                         {
-                            Console.Write(EdgeX);
+                            writer.Write(edgeX);
                         }
                         else
                         {
-                            Console.Write(EdgeY);
+                            writer.Write(edgeY);
                         }
 
                     }

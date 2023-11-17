@@ -1,9 +1,15 @@
-﻿namespace Snake
+﻿using Snake.Contracts;
+
+namespace Snake
 {
     public class Snake
     {
-        public Snake()
+        private IWriter writer;
+
+        public Snake(IWriter writer)
         {
+            this.writer = writer;
+
             if (this.Head == null)
             {
                 var head = new SnakePart(40, 15);
@@ -38,7 +44,7 @@
                     lastYPosition = item.yPosition;
                     item.xPosition += xValue;
                     item.yPosition += yValue;
-                    PrintInConsole('@', item.xPosition, item.yPosition);
+                    writer.PrintInConsole('@', item.xPosition, item.yPosition);
                     
                 }
                 else
@@ -51,17 +57,11 @@
 
                     item.yPosition = lastYPosition;
                     lastYPosition = tempY;
-                    PrintInConsole('@', item.xPosition, item.yPosition);
-                }                
-                PrintInConsole(' ', lastXPosition, lastYPosition);
+                    writer.PrintInConsole('@', item.xPosition, item.yPosition);
+                }
+                writer.PrintInConsole(' ', lastXPosition, lastYPosition);
                                
             }
-        }
-
-        private static void PrintInConsole(char symbol, int xPosition, int yPosition)
-        {
-            Console.SetCursorPosition(xPosition, yPosition);
-            Console.Write(symbol);
-        }
+        }        
     }
 }

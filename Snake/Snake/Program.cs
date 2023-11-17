@@ -1,17 +1,21 @@
-﻿namespace Snake
+﻿using Snake.Contracts;
+
+namespace Snake
 { 
     public class Program
     {
-        private static Snake snake = new Snake();
+        private static IWriter writer = new Writer();
 
-        private static Game game = new Game(snake);               
+        private static Snake snake = new Snake(writer);       
+
+        private static Game game = new Game(snake, writer);               
 
         public static void Main()
         {
-            RunTheGame();            
+            RunGame();            
         }
 
-        private static void RunTheGame()
+        private static void RunGame()
         {
             game.Run();
         }        
