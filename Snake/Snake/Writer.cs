@@ -30,6 +30,12 @@ namespace Snake
             Console.Write(symbol);
         }
 
+        public void WriteInPosition(int xPosition, int yPosition, string message)
+        {
+            SetCursorPosition(xPosition, yPosition);
+            Write(message);
+        }
+
         public bool KeyAvailable()
         {
             return Console.KeyAvailable;

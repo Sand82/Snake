@@ -22,12 +22,15 @@ namespace Snake
 
         private bool isGameOver = false;
 
-        private IWriter writer;        
+        private IWriter writer;
 
-        public Game(Snake snake, IWriter writer )
+        private Score score;
+
+        public Game(Snake snake, IWriter writer, Score score)
         {
             this.Snake = snake;
             this.writer = writer;
+            this.score = score;
         }
 
         public Snake Snake { get; set; }
@@ -44,22 +47,26 @@ namespace Snake
                 GamePipeLine();
             }
 
-            writer.SetCursorPosition(0,32);
-
-            writer.Write("Game Over!");
+            writer.WriteInPosition(score.xPosition, score.yPosition, String.Format("Final Score is: {0}", score.GetScore()));
+            writer.WriteInPosition(0,32, "Game Over!");            
         }
 
         private void GamePipeLine()
         {
-            var oldDirection = string.Empty;
+            var oldDirection = string.Empty;           
 
             while (isGameOver != true)
             {
-                oldDirection = direction;
+                writer.WriteInPosition(score.xPosition, score.yPosition,String.Format("Score is: {0}", score.GetScore()));
+
+                score.AddScore(score.TurnPoints);
+
+                oldDirection = direction;                
 
                 while (foods.Count < 10)
                 {
-                    SetFood();
+                    
+                    SetFood();                   
 
                     for (int i = 0; i < foods.Count; i++)
                     {
@@ -138,6 +145,7 @@ namespace Snake
                 {
                     foods.Remove(food);
                     Snake.AddBodyElemen(food.xPosition, food.yPosition);
+                    score.AddScore(score.FoodPoints);
                     break;
                 }
             }

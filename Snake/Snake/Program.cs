@@ -6,9 +6,12 @@ namespace Snake
     {
         private static IWriter writer = new Writer();
 
-        private static Snake snake = new Snake(writer);       
+        private static Snake snake = new Snake(writer);
 
-        private static Game game = new Game(snake, writer);               
+        private static Score score = new Score();
+
+        private static Game game = new Game(snake, writer, score);
+        
 
         public static void Main()
         {

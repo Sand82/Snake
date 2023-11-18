@@ -12,6 +12,8 @@
 
         public bool KeyAvailable();
 
+        public void WriteInPosition(int xPosition, int yPosition, string message);
+
         public ConsoleKey Key();
     }
 }
