@@ -3,21 +3,26 @@
 namespace Snake
 {
     public class Writer : IWriter
-    { 
+    {
+        public Writer()
+        {
+            Console.CursorVisible = false;
+        }
+
         public void PrintInConsole(char symbol, int xPosition, int yPosition)
         {
             Console.SetCursorPosition(xPosition, yPosition);
-            Console.Write(symbol);
+            Console.Write(symbol);           
         }
 
         public void SetCursorPosition(int left, int right)
         {
-            Console.SetCursorPosition(left, right);
+            Console.SetCursorPosition(left, right);            
         }
 
         public void Write(char symbol)
         {
-            Console.Write(symbol);
+            Console.Write(symbol);            
         }
 
         public void Write(string symbol)

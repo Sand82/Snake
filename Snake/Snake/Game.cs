@@ -57,9 +57,16 @@ namespace Snake
             {
                 oldDirection = direction;
 
-                while (foods.Count < 3)
+                while (foods.Count < 10)
                 {
                     SetFood();
+
+                    for (int i = 0; i < foods.Count; i++)
+                    {
+                        var currFood = foods[i];
+
+                        CheckForNewFoodCordinat(currFood.xPosition, currFood.yPosition, i);
+                    }
                 }
 
                 Thread.Sleep(200);
@@ -136,6 +143,19 @@ namespace Snake
             }
         }
 
+        private void CheckForNewFoodCordinat(int foodXPosition, int foodYPosition, int position)
+        {
+            for (int i = 0; i < Snake.Body.Count; i++)
+            {
+                var snakePart = Snake.Body[i];
+
+                if (snakePart.xPosition == foodXPosition &&  snakePart.yPosition == foodYPosition)
+                {
+                    foods.RemoveAt(position);
+                }
+            }            
+        }
+
         private int GetNextStep(int headPosition, int step)
         {
             return step + headPosition;
@@ -195,10 +215,9 @@ namespace Snake
             var y = new Random();
             int yValue = y.Next(1, 29);
 
+            var food = new Food(xValue, yValue);            
 
-            var food = new Food(xValue, yValue);
-
-            writer.PrintInConsole(food.foodSymbol, xValue, yValue);
+            writer.PrintInConsole(food.foodSymbol, xValue, yValue);            
 
             foods.Add(food);
         }        

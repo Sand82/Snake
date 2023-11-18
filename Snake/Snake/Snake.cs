@@ -14,7 +14,7 @@ namespace Snake
             {
                 var head = new SnakePart(40, 15);
                 this.Head = head;
-                this.Body.Add(head);
+                this.Body.Add(head);                
             }
         }
 
@@ -45,7 +45,11 @@ namespace Snake
                     item.xPosition += xValue;
                     item.yPosition += yValue;
                     writer.PrintInConsole('@', item.xPosition, item.yPosition);
-                    
+
+                    if (Body.Count <= 2)
+                    {
+                        writer.PrintInConsole(' ', lastXPosition, lastYPosition);
+                    }
                 }
                 else
                 {
@@ -58,9 +62,8 @@ namespace Snake
                     item.yPosition = lastYPosition;
                     lastYPosition = tempY;
                     writer.PrintInConsole('@', item.xPosition, item.yPosition);
-                }
-                writer.PrintInConsole(' ', lastXPosition, lastYPosition);
-                               
+                    writer.PrintInConsole(' ', lastXPosition, lastYPosition);
+                }               
             }
         }        
     }
