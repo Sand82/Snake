@@ -40,12 +40,12 @@ namespace Snake
             DrawBorders("test test");
 
             writer.PrintInConsole('@', Snake.Head.xPosition, Snake.Head.yPosition);
-            writer.PrintInConsole(' ', Snake.Head.xPosition, Snake.Head.yPosition);            
+            //writer.PrintInConsole(' ', Snake.Head.xPosition, Snake.Head.yPosition);            
 
             while (isGameOver != true)
             {
                 GamePipeLine();
-            }
+            }            
 
             writer.WriteInPosition(score.xPosition, score.yPosition, String.Format("Final Score is: {0}", score.GetScore()));
             writer.WriteInPosition(0,32, "Game Over!");            
@@ -94,9 +94,10 @@ namespace Snake
 
                 isGameOver = ValidateNextStep(nextXPosition, nextYPosition);
 
+                
                 CheckForEatenFood(nextXPosition, nextYPosition);
 
-                CheckSnakeForSelfBite(nextXPosition, nextYPosition);
+                CheckSnakeForSelfBite();                
 
                 Snake.MoveSnake(xValue, yValue);
             }
@@ -125,11 +126,11 @@ namespace Snake
             }
         }
 
-        private void CheckSnakeForSelfBite(int nextXPosition, int nextYPosition)
+        private void CheckSnakeForSelfBite()
         {
             foreach (var snakePart in Snake.Body.Skip(1))
             {
-                if (Snake.Head.xPosition == snakePart.xPosition && Snake.Head.yPosition == snakePart.yPosition)
+                if (Snake.Head.xPosition == snakePart.Value.xPosition && Snake.Head.yPosition == snakePart.Value.yPosition)
                 {
                     isGameOver = true;
                     break;
@@ -144,16 +145,16 @@ namespace Snake
                 if (nextXPosition == food.xPosition && nextYPosition == food.yPosition)
                 {
                     foods.Remove(food);
-                    Snake.AddBodyElemen(food.xPosition, food.yPosition);
+                    Snake.AddBodyElemen(food.xPosition, food.yPosition);                    
                     score.AddScore(score.FoodPoints);
                     break;
                 }
-            }
+            }            
         }
 
         private void CheckForNewFoodCordinat(int foodXPosition, int foodYPosition, int position)
         {
-            for (int i = 0; i < Snake.Body.Count; i++)
+            for (int i = 1; i <= Snake.Body.Count; i++)
             {
                 var snakePart = Snake.Body[i];
 

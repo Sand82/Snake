@@ -7,5 +7,7 @@ namespace Snake
         public SnakePart(int xPosition, int yPosition) 
             : base(xPosition, yPosition)
         {}
+
+        public SnakePart Next { get; set; }
     }
 }

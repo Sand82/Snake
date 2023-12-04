@@ -6,65 +6,68 @@ namespace Snake
     {
         private IWriter writer;
 
+        private int count = 1;
+
         public Snake(IWriter writer)
         {
             this.writer = writer;
 
-            if (this.Head == null)
+            if (Head == null)
             {
                 var head = new SnakePart(40, 15);
-                this.Head = head;
-                this.Body.Add(head);                
+                Head = head;
+                Teal = head;
+                Body.Add(count, head);
             }
         }
 
-        public SnakePart Head { get; set; }
+        public SnakePart Teal { get; private set; }
 
-        public List<SnakePart> Body { get; set; } = new List<SnakePart>();        
+        public SnakePart Head { get; private set; }
+        
+        public Dictionary<int, SnakePart> Body { get; set; } = new();
 
         public void AddBodyElemen(int xPosition, int yPosition)
         {
             var bodyElement = new SnakePart(xPosition, yPosition);
-
-            Body.Add(bodyElement);
+            
+            count++;
+            Teal = bodyElement;
+            Body.Add(count, bodyElement);
         }
 
         public void MoveSnake(int xValue, int yValue)
-        {
-            var lastXPosition = 0;
-            var lastYPosition = 0;
+        {            
+            writer.PrintInConsole(' ', Teal.xPosition, Teal.yPosition);            
 
-            for (int i = 0; i < Body.Count; i++)
+            var lastXCordinate = Head.xPosition;
+            var lastYCordinate = Head.yPosition;
+
+            Head.xPosition += xValue;
+            Head.yPosition += yValue;
+
+            writer.PrintInConsole('@', Head.xPosition, Head.yPosition);
+
+            for (int i = 2; i <= count; i++)
             {
-                var item = Body[i];
+                var bodyPart = Body[i];               
 
-                if (item.xPosition == Head.xPosition && item.yPosition == Head.yPosition)
-                {
-                    lastXPosition = item.xPosition;
-                    lastYPosition = item.yPosition;
-                    item.xPosition += xValue;
-                    item.yPosition += yValue;
-                    writer.PrintInConsole('@', item.xPosition, item.yPosition);
+                (lastXCordinate, bodyPart.xPosition) = MoveInPosition(bodyPart.xPosition, lastXCordinate);
+                (lastYCordinate, bodyPart.yPosition) = MoveInPosition(bodyPart.yPosition, lastYCordinate);
 
-                    if (Body.Count <= 2)
-                    {
-                        writer.PrintInConsole(' ', lastXPosition, lastYPosition);
-                    }
-                }
-                else
-                {
-                    var tempX = item.xPosition;
-                    var tempY = item.yPosition;
+                writer.PrintInConsole('@', bodyPart.xPosition, bodyPart.yPosition);
+            }            
+        }
 
-                    item.xPosition = lastXPosition;
-                    lastXPosition  = tempX;
+        private (int, int) MoveInPosition( int currentPosition, int lastPosition )
+        {
+            var temp = currentPosition;
 
-                    item.yPosition = lastYPosition;
-                    lastYPosition = tempY;
-                    writer.PrintInConsole('@', item.xPosition, item.yPosition);
-                    writer.PrintInConsole(' ', lastXPosition, lastYPosition);
-                }               
-            }
-        }        
+            currentPosition = lastPosition;
+
+            lastPosition = temp;
+
+            return (lastPosition, currentPosition);            
+        }
     }
 }
