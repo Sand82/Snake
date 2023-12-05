@@ -26,11 +26,14 @@ namespace Snake
 
         private Score score;
 
-        public Game(Snake snake, IWriter writer, Score score)
+        private GameSpeed speed;
+
+        public Game(Snake snake, IWriter writer, Score score, GameSpeed speed)
         {
             this.Snake = snake;
             this.writer = writer;
             this.score = score;
+            this.speed = speed;
         }
 
         public Snake Snake { get; set; }
@@ -39,8 +42,7 @@ namespace Snake
         {
             DrawBorders("test test");
 
-            writer.PrintInConsole('@', Snake.Head.xPosition, Snake.Head.yPosition);
-            //writer.PrintInConsole(' ', Snake.Head.xPosition, Snake.Head.yPosition);            
+            writer.PrintInConsole('@', Snake.Head.xPosition, Snake.Head.yPosition);                    
 
             while (isGameOver != true)
             {
@@ -64,19 +66,15 @@ namespace Snake
                 oldDirection = direction;                
 
                 while (foods.Count < 10)
-                {
-                    
-                    SetFood();                   
-
-                    for (int i = 0; i < foods.Count; i++)
-                    {
-                        var currFood = foods[i];
-
-                        CheckForNewFoodCordinat(currFood.xPosition, currFood.yPosition, i);
-                    }
+                {                    
+                    SetFood();
                 }
 
-                Thread.Sleep(200);
+                var currScore = score.GetScore();
+
+                speed.SetGameSpeed(currScore);
+
+                Thread.Sleep(speed.Speed);
 
                 if (writer.KeyAvailable())
                 {
@@ -93,7 +91,6 @@ namespace Snake
                 var nextYPosition = GetNextStep(Snake.Head.yPosition, yValue);
 
                 isGameOver = ValidateNextStep(nextXPosition, nextYPosition);
-
                 
                 CheckForEatenFood(nextXPosition, nextYPosition);
 
@@ -101,6 +98,11 @@ namespace Snake
 
                 Snake.MoveSnake(xValue, yValue);
             }
+        }
+
+        private bool CheckForFoodOverride(int foodXPosition, int foodYPosition)
+        {
+            return foods.Any(food => food.xPosition == foodXPosition && food.yPosition == foodYPosition);            
         }
 
         private void ValidateDirection(ConsoleKey key , string oldDirection)
@@ -152,17 +154,9 @@ namespace Snake
             }            
         }
 
-        private void CheckForNewFoodCordinat(int foodXPosition, int foodYPosition, int position)
+        private bool CheckNewFoodOverrideSnakeBody(int foodXPosition, int foodYPosition)
         {
-            for (int i = 1; i <= Snake.Body.Count; i++)
-            {
-                var snakePart = Snake.Body[i];
-
-                if (snakePart.xPosition == foodXPosition &&  snakePart.yPosition == foodYPosition)
-                {
-                    foods.RemoveAt(position);
-                }
-            }            
+            return Snake.Body.Any(food => food.Value.xPosition == foodXPosition && food.Value.yPosition == foodYPosition);
         }
 
         private int GetNextStep(int headPosition, int step)
@@ -224,11 +218,18 @@ namespace Snake
             var y = new Random();
             int yValue = y.Next(1, 29);
 
-            var food = new Food(xValue, yValue);            
+            var food = new Food(xValue, yValue);
 
-            writer.PrintInConsole(food.foodSymbol, xValue, yValue);            
+            var isOvveridSnakePart = CheckNewFoodOverrideSnakeBody(xValue, yValue);
 
-            foods.Add(food);
+            var isOvveridFood = CheckForFoodOverride(xValue, yValue);
+
+            if (!isOvveridSnakePart && !isOvveridFood)
+            {
+                writer.PrintInConsole(food.foodSymbol, xValue, yValue);
+
+                foods.Add(food);
+            }           
         }        
 
         private void DrawBorders(string message)

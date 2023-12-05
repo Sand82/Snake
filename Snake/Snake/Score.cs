@@ -21,11 +21,11 @@ namespace Snake
         public void AddScore(int points)
         {
             score += points;
-        }        
+        }                 
 
-        public string GetScore()
+        public int GetScore()
         {
-            return score.ToString();
+            return score;
         }
     }
 }

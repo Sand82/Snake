@@ -10,8 +10,9 @@ namespace Snake
 
         private static Score score = new Score();
 
-        private static Game game = new Game(snake, writer, score);
-        
+        private static GameSpeed speed = new GameSpeed();
+
+        private static Game game = new Game(snake, writer, score, speed);        
 
         public static void Main()
         {
