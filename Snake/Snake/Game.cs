@@ -2,19 +2,12 @@
 
 namespace Snake
 {  
-    public class Game
+    public class Game 
     {
         private const string right = "Right";
         private const string left = "Left";
         private const string up = "Up";
-        private const string down = "Down";
-
-        private int boardStartPossitionX = 0;
-        private int boardStartPossitionY = 0;
-        private int boardWidth = 80;
-        private int boardHeight = 30;
-        private char edgeX = '|';
-        private char edgeY = '-';
+        private const string down = "Down";       
 
         private List<Food> foods = new();
 
@@ -28,19 +21,22 @@ namespace Snake
 
         private GameSpeed speed;
 
-        public Game(Snake snake, IWriter writer, Score score, GameSpeed speed)
+        private Board board;
+
+        public Game(Snake snake, IWriter writer, Score score, GameSpeed speed, Board board)
         {
             this.Snake = snake;
             this.writer = writer;
             this.score = score;
             this.speed = speed;
+            this.board = board;
         }
 
         public Snake Snake { get; set; }
 
         public void Run()
         {
-            DrawBorders("test test");
+            board.DrawBorders("test test");
 
             writer.PrintInConsole('@', Snake.Head.xPosition, Snake.Head.yPosition);                    
 
@@ -166,10 +162,10 @@ namespace Snake
 
         private bool ValidateNextStep(int nextXPosition, int nextYPosition)
         {
-            return nextXPosition == boardStartPossitionX ||
-                        nextXPosition == boardWidth ||
-                        nextYPosition == boardStartPossitionY ||
-                        nextYPosition == boardHeight;
+            return nextXPosition == board.BoardStartPossitionX ||
+                        nextXPosition == board.BoardWidth ||
+                        nextYPosition == board.BoardStartPossitionY ||
+                        nextYPosition == board.BoardHeight;
         }
 
         private (int, int) GetNewPosition(string direction)
@@ -230,48 +226,6 @@ namespace Snake
 
                 foods.Add(food);
             }           
-        }        
-
-        private void DrawBorders(string message)
-        {
-            int lastIndex = 0;
-            writer.SetCursorPosition(boardStartPossitionX, boardStartPossitionY);
-            for (int h_i = 0; h_i <= boardHeight; h_i++)
-            {
-                if (lastIndex != -1)
-                {
-                    int seaindex = (lastIndex + (boardWidth - 1));
-                    if (seaindex >= message.Length - 1)
-                        seaindex = message.Length - 1;
-                    int newIndex = message.LastIndexOf(' ', seaindex);
-                    if (newIndex == -1)
-                        newIndex = message.Length - 1;
-                    string substr = message.Substring(lastIndex, newIndex - lastIndex);
-                    lastIndex = newIndex;
-                    writer.SetCursorPosition(boardStartPossitionX + 1, boardStartPossitionY + h_i);
-                    writer.Write(substr);
-                }
-
-                var maxYRol = boardWidth;
-
-                for (int w_i = 0; w_i <= boardWidth; w_i++)
-                {
-                    if (h_i % boardHeight == 0 || w_i % boardWidth == 0)
-                    {
-                        writer.SetCursorPosition(boardStartPossitionX + w_i, boardStartPossitionY + h_i);
-
-                        if (w_i == 0 || w_i == maxYRol)
-                        {
-                            writer.Write(edgeX);
-                        }
-                        else
-                        {
-                            writer.Write(edgeY);
-                        }
-
-                    }
-                }
-            }
         }
     }
 }

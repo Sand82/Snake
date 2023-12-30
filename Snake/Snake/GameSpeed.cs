@@ -1,6 +1,8 @@
-﻿namespace Snake
+﻿using Snake.Contracts;
+
+namespace Snake
 {
-    public class GameSpeed
+    public class GameSpeed 
     {
         public int Speed { get; private set; } = 200;
         

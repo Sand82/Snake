@@ -2,7 +2,7 @@
 
 namespace Snake
 {
-    public class Snake
+    public class Snake 
     {
         private IWriter writer;
 

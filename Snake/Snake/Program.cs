@@ -3,7 +3,7 @@
 namespace Snake
 { 
     public class Program
-    {
+    {      
         private static IWriter writer = new Writer();
 
         private static Snake snake = new Snake(writer);
@@ -12,7 +12,9 @@ namespace Snake
 
         private static GameSpeed speed = new GameSpeed();
 
-        private static Game game = new Game(snake, writer, score, speed);        
+        private static Board board = new Board(writer);
+
+        private static Game game = new Game(snake, writer, score, speed, board);        
 
         public static void Main()
         {
@@ -22,6 +24,6 @@ namespace Snake
         private static void RunGame()
         {
             game.Run();
-        }        
+        } 
     }
 }
