@@ -12,16 +12,15 @@ namespace Snake
 
         private static GameSpeed speed = new GameSpeed();
 
-        private static Board board = new Board(writer);
-
-        private static Game game = new Game(snake, writer, score, speed, board);        
+        private static Board board = new Board(writer);               
 
         public static void Main()
         {
-            RunGame();            
+            Game game = new Game(snake, writer, score, speed, board);
+            RunGame(game);            
         }
 
-        private static void RunGame()
+        private static void RunGame(Game game)
         {
             game.Run();
         } 
