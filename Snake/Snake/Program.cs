@@ -1,29 +1,19 @@
-﻿using Snake.Contracts;
-using Snake.Implementations;
+﻿using Snake.DI;
+using Snake.DI.Containers;
 
 namespace Snake
 { 
     public class Program
-    {      
-        private static IWriter writer = new Writer();
-
-        private static ISnake snake = new Implementations.Snake(writer);
-
-        private static IScore score = new Score(writer);
-
-        private static IGameSpeed speed = new GameSpeed();
-
-        private static IBoard board = new Board(writer);               
-
+    { 
         public static void Main()
-        {
-            IGame game = new Game(snake, writer, score, speed, board);
-            RunGame(game);            
-        }
+        {     
+            IContainer container = new SnakeContainer();
+            container.ConfigureServices();
 
-        private static void RunGame(IGame game)
-        {
-            game.Run();
-        } 
+            Injector injector = new Injector(container);
+            Engine engine = injector.Inject<Engine>();  
+            
+            engine.StartGame();
+        }       
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Snake.Contracts;
+using Snake.DI.Attributes;
 
 namespace Snake.Implementations
 {
@@ -25,6 +26,7 @@ namespace Snake.Implementations
 
         private ISnake snake;
 
+        [Inject]
         public Game(ISnake snake, IWriter writer, IScore score, IGameSpeed speed, IBoard board)
         {
             this.snake = snake;

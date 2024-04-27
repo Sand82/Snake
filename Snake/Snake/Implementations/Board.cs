@@ -1,4 +1,5 @@
 ﻿using Snake.Contracts;
+using Snake.DI.Attributes;
 
 namespace Snake.Implementations
 {
@@ -18,6 +19,7 @@ namespace Snake.Implementations
 
         private int boardHeight = 30;
 
+        [Inject]
         public Board(IWriter writer)
         {
             this.writer = writer;

@@ -1,4 +1,5 @@
 ﻿using Snake.Contracts;
+using Snake.DI.Attributes;
 
 namespace Snake.Implementations
 {
@@ -16,6 +17,7 @@ namespace Snake.Implementations
 
         private int score = 0;
 
+        [Inject]
         public Score(IWriter writer)
             : base(xScorePosition, yScorePosition)
         {

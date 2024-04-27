@@ -1,9 +1,11 @@
 ﻿using Snake.Contracts;
+using Snake.DI.Attributes;
 
 namespace Snake.Implementations
 {
     public class Writer : IWriter
     {
+        [Inject]
         public Writer()
         {
             Console.CursorVisible = false;

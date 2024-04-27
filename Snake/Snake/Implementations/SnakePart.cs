@@ -8,6 +8,6 @@ namespace Snake.Implementations
             : base(xPosition, yPosition)
         { }
 
-        public SnakePart Next { get; set; }
+        public SnakePart? Next { get; set; }
     }
 }

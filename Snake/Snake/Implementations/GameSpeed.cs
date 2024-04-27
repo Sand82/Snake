@@ -1,10 +1,15 @@
 ﻿using Snake.Contracts;
+using Snake.DI.Attributes;
 
 namespace Snake.Implementations
 {
     public class GameSpeed : IGameSpeed
     {
         private int speed = 200;
+
+        [Inject]
+        public GameSpeed()
+        { }
 
         public int GetGameSpeed()
         {

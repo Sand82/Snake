@@ -1,4 +1,5 @@
 ﻿using Snake.Contracts;
+using Snake.DI.Attributes;
 
 namespace Snake.Implementations
 {
@@ -6,7 +7,7 @@ namespace Snake.Implementations
     {
         private IWriter writer;
 
-        private SnakePart teal;
+        private SnakePart? teal;
 
         private SnakePart head;
 
@@ -14,6 +15,7 @@ namespace Snake.Implementations
 
         private int count = 1;
 
+        [Inject]
         public Snake(IWriter writer)
         {
             this.writer = writer;
