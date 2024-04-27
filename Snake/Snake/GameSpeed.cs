@@ -2,27 +2,32 @@
 
 namespace Snake
 {
-    public class GameSpeed 
+    public class GameSpeed : IGameSpeed
     {
-        public int Speed { get; private set; } = 200;
-        
+        private int speed = 200;
+
+        public int GetGameSpeed()
+        {
+            return speed;
+        }
+
         public void SetGameSpeed(int score)
         {
             if (score >= 10000 && score < 15000)
             {
-                Speed = 150;
+                speed = 150;
             }
             else if(score >= 15000 && score < 20000)
             {
-                Speed = 100;
+                speed = 100;
             }
             else if (score >= 20000 && score < 30000)
             {
-                Speed = 50;
+                speed = 50;
             }
             else if (score >= 30000)
             {
-                Speed = 20;
+                speed = 20;
             }
         }
     }

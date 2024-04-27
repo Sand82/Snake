@@ -2,7 +2,7 @@
 
 namespace Snake
 {
-    public class Food : Cordinates
+    public class Food : Coordinates
     {
         public char foodSymbol = '#';
 

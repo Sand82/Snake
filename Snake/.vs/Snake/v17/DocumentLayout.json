@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "C:\\CSharp\\Snake\\Snake\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|c:\\csharp\\snake\\snake\\snake\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|solutionrelative:snake\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|c:\\csharp\\snake\\snake\\snake\\score.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|solutionrelative:snake\\score.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|c:\\csharp\\snake\\snake\\snake\\contracts\\iscore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|solutionrelative:snake\\contracts\\iscore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|c:\\csharp\\snake\\snake\\snake\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -18,32 +22,46 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Game.cs",
-              "DocumentMoniker": "C:\\CSharp\\Snake\\Snake\\Snake\\Game.cs",
-              "RelativeDocumentMoniker": "Snake\\Game.cs",
-              "ToolTip": "C:\\CSharp\\Snake\\Snake\\Snake\\Game.cs",
-              "RelativeToolTip": "Snake\\Game.cs",
-              "ViewState": "AQIAAHIAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-25T19:52:39.386Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\CSharp\\Snake\\Snake\\Snake\\Program.cs",
               "RelativeDocumentMoniker": "Snake\\Program.cs",
               "ToolTip": "C:\\CSharp\\Snake\\Snake\\Snake\\Program.cs",
               "RelativeToolTip": "Snake\\Program.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAA4AAAA3AAAA",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAgwBIAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-25T19:51:15.852Z",
+              "WhenOpened": "2024-04-27T16:28:50.902Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Score.cs",
+              "DocumentMoniker": "C:\\CSharp\\Snake\\Snake\\Snake\\Score.cs",
+              "RelativeDocumentMoniker": "Snake\\Score.cs",
+              "ToolTip": "C:\\CSharp\\Snake\\Snake\\Snake\\Score.cs",
+              "RelativeToolTip": "Snake\\Score.cs",
+              "ViewState": "AQIAABQAAAAAAAAAAAAAACoAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-27T17:20:14.666Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IScore.cs",
+              "DocumentMoniker": "C:\\CSharp\\Snake\\Snake\\Snake\\Contracts\\IScore.cs",
+              "RelativeDocumentMoniker": "Snake\\Contracts\\IScore.cs",
+              "ToolTip": "C:\\CSharp\\Snake\\Snake\\Snake\\Contracts\\IScore.cs",
+              "RelativeToolTip": "Snake\\Contracts\\IScore.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-27T17:20:06.93Z",
               "EditorCaption": ""
             }
           ]

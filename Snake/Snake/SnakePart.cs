@@ -2,7 +2,7 @@
 
 namespace Snake
 {
-    public class SnakePart : Cordinates
+    public class SnakePart : Coordinates
     {
         public SnakePart(int xPosition, int yPosition) 
             : base(xPosition, yPosition)

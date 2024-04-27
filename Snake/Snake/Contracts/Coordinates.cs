@@ -1,9 +1,9 @@
 ﻿
 namespace Snake.Contracts
 {
-    public abstract class Cordinates
+    public abstract class Coordinates
     {
-        public Cordinates(int xPosition, int yPosition)
+        public Coordinates(int xPosition, int yPosition)
         {
             this.xPosition = xPosition;
             this.yPosition = yPosition;

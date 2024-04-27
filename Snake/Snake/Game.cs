@@ -2,7 +2,7 @@
 
 namespace Snake
 {  
-    public class Game 
+    public class Game : IGame
     {
         private const string right = "Right";
         private const string left = "Left";
@@ -17,35 +17,35 @@ namespace Snake
 
         private IWriter writer;
 
-        private Score score;
+        private IScore score;
 
-        private GameSpeed speed;
+        private IGameSpeed speed;
 
-        private Board board;
+        private IBoard board;
 
-        public Game(Snake snake, IWriter writer, Score score, GameSpeed speed, Board board)
+        private ISnake snake;
+
+        public Game(ISnake snake, IWriter writer, IScore score, IGameSpeed speed, IBoard board)
         {
-            this.Snake = snake;
+            this.snake = snake;
             this.writer = writer;
             this.score = score;
             this.speed = speed;
             this.board = board;
-        }
-
-        public Snake Snake { get; set; }
+        }       
 
         public void Run()
         {
             board.DrawBorders("test test");
 
-            writer.PrintInConsole('@', Snake.Head.xPosition, Snake.Head.yPosition);                    
+            writer.PrintInConsole('@', snake.GetHead().xPosition, snake.GetHead().yPosition);                    
 
             while (isGameOver != true)
             {
                 GamePipeLine();
             }            
 
-            writer.WriteInPosition(score.xPosition, score.yPosition, String.Format("Final Score is: {0}", score.GetScore()));
+            writer.WriteInPosition(score.GetXScorePosition(), score.GetYScorePosition(), String.Format("Final Score is: {0}", score.GetScore()));
             writer.WriteInPosition(0,32, "Game Over!");            
         }
 
@@ -55,9 +55,9 @@ namespace Snake
 
             while (isGameOver != true)
             {
-                writer.WriteInPosition(score.xPosition, score.yPosition,String.Format("Score is: {0}", score.GetScore()));
+                writer.WriteInPosition(score.GetXScorePosition(), score.GetYScorePosition(), String.Format("Score is: {0}", score.GetScore()));
 
-                score.AddScore(score.TurnPoints);
+                score.AddScore(score.GetTurnPoints());
 
                 oldDirection = direction;                
 
@@ -70,7 +70,7 @@ namespace Snake
 
                 speed.SetGameSpeed(currScore);
 
-                Thread.Sleep(speed.Speed);
+                Thread.Sleep(speed.GetGameSpeed());
 
                 if (writer.KeyAvailable())
                 {
@@ -83,16 +83,22 @@ namespace Snake
 
                 var (xValue, yValue) = GetNewPosition(direction);
 
-                var nextXPosition = GetNextStep(Snake.Head.xPosition, xValue);
-                var nextYPosition = GetNextStep(Snake.Head.yPosition, yValue);
+                var nextXPosition = GetNextStep(snake.GetHead().xPosition, xValue);
+                var nextYPosition = GetNextStep(snake.GetHead().yPosition, yValue);
 
-                isGameOver = ValidateNextStep(nextXPosition, nextYPosition);
+                isGameOver = board.ValidateNextStep(nextXPosition, nextYPosition);
                 
                 CheckForEatenFood(nextXPosition, nextYPosition);
 
-                CheckSnakeForSelfBite();                
+                var checkSnakeForSelfBite = snake.CheckSnakeForSelfBite();
 
-                Snake.MoveSnake(xValue, yValue);
+                if (checkSnakeForSelfBite)
+                {
+                    isGameOver = true;
+                    break;
+                }
+
+                snake.MoveSnake(xValue, yValue);
             }
         }
 
@@ -123,19 +129,7 @@ namespace Snake
                 direction = down;
             }
         }
-
-        private void CheckSnakeForSelfBite()
-        {
-            foreach (var snakePart in Snake.Body.Skip(1))
-            {
-                if (Snake.Head.xPosition == snakePart.Value.xPosition && Snake.Head.yPosition == snakePart.Value.yPosition)
-                {
-                    isGameOver = true;
-                    break;
-                }
-            }
-        }
-
+        
         private void CheckForEatenFood(int nextXPosition, int nextYPosition)
         {
             foreach (var food in foods)
@@ -143,30 +137,17 @@ namespace Snake
                 if (nextXPosition == food.xPosition && nextYPosition == food.yPosition)
                 {
                     foods.Remove(food);
-                    Snake.AddBodyElemen(food.xPosition, food.yPosition);                    
-                    score.AddScore(score.FoodPoints);
+                    snake.AddBodyElement(food.xPosition, food.yPosition);                    
+                    score.AddScore(score.GetFoodPoints());
                     break;
                 }
             }            
-        }
-
-        private bool CheckNewFoodOverrideSnakeBody(int foodXPosition, int foodYPosition)
-        {
-            return Snake.Body.Any(food => food.Value.xPosition == foodXPosition && food.Value.yPosition == foodYPosition);
-        }
+        }        
 
         private int GetNextStep(int headPosition, int step)
         {
             return step + headPosition;
-        }
-
-        private bool ValidateNextStep(int nextXPosition, int nextYPosition)
-        {
-            return nextXPosition == board.BoardStartPossitionX ||
-                        nextXPosition == board.BoardWidth ||
-                        nextYPosition == board.BoardStartPossitionY ||
-                        nextYPosition == board.BoardHeight;
-        }
+        }        
 
         private (int, int) GetNewPosition(string direction)
         {
@@ -216,11 +197,11 @@ namespace Snake
 
             var food = new Food(xValue, yValue);
 
-            var isOvveridSnakePart = CheckNewFoodOverrideSnakeBody(xValue, yValue);
+            var isOverrideSnakePart = snake.CheckNewFoodOverrideSnakeBody(xValue, yValue);
 
-            var isOvveridFood = CheckForFoodOverride(xValue, yValue);
+            var isOverrideFood = CheckForFoodOverride(xValue, yValue);
 
-            if (!isOvveridSnakePart && !isOvveridFood)
+            if (!isOverrideSnakePart && !isOverrideFood)
             {
                 writer.PrintInConsole(food.foodSymbol, xValue, yValue);
 

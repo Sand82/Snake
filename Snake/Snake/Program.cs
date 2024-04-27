@@ -6,13 +6,13 @@ namespace Snake
     {      
         private static IWriter writer = new Writer();
 
-        private static Snake snake = new Snake(writer);
+        private static ISnake snake = new Snake(writer);
 
-        private static Score score = new Score();
+        private static IScore score = new Score();
 
-        private static GameSpeed speed = new GameSpeed();
+        private static IGameSpeed speed = new GameSpeed();
 
-        private static Board board = new Board(writer);               
+        private static IBoard board = new Board(writer);               
 
         public static void Main()
         {

@@ -1,10 +1,17 @@
 ﻿using Snake.Contracts;
+using System.Xml.Linq;
 
 namespace Snake
 {
-    public class Snake 
+    public class Snake : ISnake
     {
         private IWriter writer;
+
+        private SnakePart teal;
+
+        private SnakePart head;
+
+        private Dictionary<int, SnakePart> body { get; set; } = new();
 
         private int count = 1;
 
@@ -12,48 +19,70 @@ namespace Snake
         {
             this.writer = writer;
 
-            if (Head == null)
+            if (head == null)
             {
                 var head = new SnakePart(40, 15);
-                Head = head;
-                Teal = head;
-                Body.Add(count, head);
+                this.head = head;
+                teal = head;
+                body.Add(count, head);
             }
         }
 
-        public SnakePart Teal { get; private set; }
-
-        public SnakePart Head { get; private set; }
-        
-        public Dictionary<int, SnakePart> Body { get; set; } = new();
-
-        public void AddBodyElemen(int xPosition, int yPosition)
+        public void AddBodyElement(int xPosition, int yPosition)
         {
             var bodyElement = new SnakePart(xPosition, yPosition);
             
             count++;
-            Teal = bodyElement;
-            Body.Add(count, bodyElement);
+            teal = bodyElement;
+            body.Add(count, bodyElement);
+        }
+
+        public SnakePart GetTeal()
+        {
+            return teal;
+        }
+
+        public SnakePart GetHead()
+        {
+            return head;
+        }
+
+        public bool CheckSnakeForSelfBite()
+        {
+            foreach (var snakePart in body.Skip(1))
+            {
+                if (head.xPosition == snakePart.Value.xPosition && head.yPosition == snakePart.Value.yPosition)
+                {
+                    return true;                   
+                }
+            }
+
+            return false;
+        }
+
+        public bool CheckNewFoodOverrideSnakeBody(int foodXPosition, int foodYPosition)
+        {
+            return body.Any(sb => sb.Value.xPosition == foodXPosition && sb.Value.yPosition == foodYPosition);
         }
 
         public void MoveSnake(int xValue, int yValue)
         {            
-            writer.PrintInConsole(' ', Teal.xPosition, Teal.yPosition);            
+            writer.PrintInConsole(' ', teal.xPosition, teal.yPosition);            
 
-            var lastXCordinate = Head.xPosition;
-            var lastYCordinate = Head.yPosition;
+            var lastXCoordinate = head.xPosition;
+            var lastYCoordinate = head.yPosition;
 
-            Head.xPosition += xValue;
-            Head.yPosition += yValue;
+            head.xPosition += xValue;
+            head.yPosition += yValue;
 
-            writer.PrintInConsole('@', Head.xPosition, Head.yPosition);
+            writer.PrintInConsole('@', head.xPosition, head.yPosition);
 
             for (int i = 2; i <= count; i++)
             {
-                var bodyPart = Body[i];               
+                var bodyPart = body[i];               
 
-                (lastXCordinate, bodyPart.xPosition) = MoveInPosition(bodyPart.xPosition, lastXCordinate);
-                (lastYCordinate, bodyPart.yPosition) = MoveInPosition(bodyPart.yPosition, lastYCordinate);
+                (lastXCoordinate, bodyPart.xPosition) = MoveInPosition(bodyPart.xPosition, lastXCoordinate);
+                (lastYCoordinate, bodyPart.yPosition) = MoveInPosition(bodyPart.yPosition, lastYCoordinate);
 
                 writer.PrintInConsole('@', bodyPart.xPosition, bodyPart.yPosition);
             }            
@@ -68,6 +97,6 @@ namespace Snake
             lastPosition = temp;
 
             return (lastPosition, currentPosition);            
-        }
+        }        
     }
 }

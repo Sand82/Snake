@@ -1,10 +1,8 @@
-﻿
-using Snake.Contracts;
-using System.Text.RegularExpressions;
+﻿using Snake.Contracts;
 
 namespace Snake
 {
-    public class Board
+    public class Board : IBoard
     { 
         private char edgeX = '|';
 
@@ -12,28 +10,28 @@ namespace Snake
 
         private IWriter writer;
 
+        private int boardStartPositionX = 0;
+
+        private int boardStartPositionY = 0;
+
+        private int boardWidth = 80;
+
+        private int boardHeight = 30;
+
         public Board(IWriter writer)
         {
             this.writer = writer;
         }
 
-        public int BoardStartPossitionX { get; private set; } = 0;
-
-        public int BoardStartPossitionY { get;private set; } = 0;
-
-        public int BoardWidth { get; private set; } = 80;
-
-        public int BoardHeight { get; set; } = 30;
-
         public void DrawBorders(string message)
         {
             int lastIndex = 0;
-            writer.SetCursorPosition(BoardStartPossitionX, BoardStartPossitionY);
-            for (int h_i = 0; h_i <= BoardHeight; h_i++)
+            writer.SetCursorPosition(boardStartPositionX, boardStartPositionY);
+            for (int h_i = 0; h_i <= boardHeight; h_i++)
             {
                 if (lastIndex != -1)
                 {
-                    int seaindex = (lastIndex + (BoardWidth - 1));
+                    int seaindex = (lastIndex + (boardWidth - 1));
                     if (seaindex >= message.Length - 1)
                         seaindex = message.Length - 1;
                     int newIndex = message.LastIndexOf(' ', seaindex);
@@ -41,17 +39,17 @@ namespace Snake
                         newIndex = message.Length - 1;
                     string substr = message.Substring(lastIndex, newIndex - lastIndex);
                     lastIndex = newIndex;
-                    writer.SetCursorPosition(BoardStartPossitionX + 1, BoardStartPossitionY + h_i);
+                    writer.SetCursorPosition(boardStartPositionX + 1, boardStartPositionY + h_i);
                     writer.Write(substr);
                 }
 
-                var maxYRol = BoardWidth;
+                var maxYRol = boardWidth;
 
-                for (int w_i = 0; w_i <= BoardWidth; w_i++)
+                for (int w_i = 0; w_i <= boardWidth; w_i++)
                 {
-                    if (h_i % BoardHeight == 0 || w_i % BoardWidth == 0)
+                    if (h_i % boardHeight == 0 || w_i % boardWidth == 0)
                     {
-                        writer.SetCursorPosition(BoardStartPossitionX + w_i, BoardStartPossitionY + h_i);
+                        writer.SetCursorPosition(boardStartPositionX + w_i, boardStartPositionY + h_i);
 
                         if (w_i == 0 || w_i == maxYRol)
                         {
@@ -65,6 +63,14 @@ namespace Snake
                     }
                 }
             }
+        }
+
+        public bool ValidateNextStep(int nextXPosition, int nextYPosition)
+        {
+            return nextXPosition == boardStartPositionX ||
+                        nextXPosition == boardWidth ||
+                        nextYPosition == boardStartPositionY ||
+                        nextYPosition == boardHeight;
         }
     }
 }
