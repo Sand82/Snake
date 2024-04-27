@@ -1,7 +1,6 @@
 ﻿using Snake.Contracts;
-using System.Xml.Linq;
 
-namespace Snake
+namespace Snake.Implementations
 {
     public class Snake : ISnake
     {
@@ -31,7 +30,7 @@ namespace Snake
         public void AddBodyElement(int xPosition, int yPosition)
         {
             var bodyElement = new SnakePart(xPosition, yPosition);
-            
+
             count++;
             teal = bodyElement;
             body.Add(count, bodyElement);
@@ -53,7 +52,7 @@ namespace Snake
             {
                 if (head.xPosition == snakePart.Value.xPosition && head.yPosition == snakePart.Value.yPosition)
                 {
-                    return true;                   
+                    return true;
                 }
             }
 
@@ -66,8 +65,8 @@ namespace Snake
         }
 
         public void MoveSnake(int xValue, int yValue)
-        {            
-            writer.PrintInConsole(' ', teal.xPosition, teal.yPosition);            
+        {
+            writer.PrintInConsole(' ', teal.xPosition, teal.yPosition);
 
             var lastXCoordinate = head.xPosition;
             var lastYCoordinate = head.yPosition;
@@ -79,16 +78,16 @@ namespace Snake
 
             for (int i = 2; i <= count; i++)
             {
-                var bodyPart = body[i];               
+                var bodyPart = body[i];
 
                 (lastXCoordinate, bodyPart.xPosition) = MoveInPosition(bodyPart.xPosition, lastXCoordinate);
                 (lastYCoordinate, bodyPart.yPosition) = MoveInPosition(bodyPart.yPosition, lastYCoordinate);
 
                 writer.PrintInConsole('@', bodyPart.xPosition, bodyPart.yPosition);
-            }            
+            }
         }
 
-        private (int, int) MoveInPosition( int currentPosition, int lastPosition )
+        private (int, int) MoveInPosition(int currentPosition, int lastPosition)
         {
             var temp = currentPosition;
 
@@ -96,7 +95,7 @@ namespace Snake
 
             lastPosition = temp;
 
-            return (lastPosition, currentPosition);            
-        }        
+            return (lastPosition, currentPosition);
+        }
     }
 }

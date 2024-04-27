@@ -1,6 +1,6 @@
 ﻿using Snake.Contracts;
 
-namespace Snake
+namespace Snake.Implementations
 {
     public class GameSpeed : IGameSpeed
     {
@@ -17,7 +17,7 @@ namespace Snake
             {
                 speed = 150;
             }
-            else if(score >= 15000 && score < 20000)
+            else if (score >= 15000 && score < 20000)
             {
                 speed = 100;
             }

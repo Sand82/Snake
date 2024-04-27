@@ -1,9 +1,9 @@
 ﻿using Snake.Contracts;
 
-namespace Snake
+namespace Snake.Implementations
 {
     public class Board : IBoard
-    { 
+    {
         private char edgeX = '|';
 
         private char edgeY = '-';
@@ -31,7 +31,7 @@ namespace Snake
             {
                 if (lastIndex != -1)
                 {
-                    int seaindex = (lastIndex + (boardWidth - 1));
+                    int seaindex = lastIndex + (boardWidth - 1);
                     if (seaindex >= message.Length - 1)
                         seaindex = message.Length - 1;
                     int newIndex = message.LastIndexOf(' ', seaindex);

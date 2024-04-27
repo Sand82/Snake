@@ -1,4 +1,6 @@
-﻿namespace Snake.Contracts
+﻿using Snake.Implementations;
+
+namespace Snake.Contracts
 {
     public interface ISnake
     {

@@ -1,4 +1,5 @@
 ﻿using Snake.Contracts;
+using Snake.Implementations;
 
 namespace Snake
 { 
@@ -6,9 +7,9 @@ namespace Snake
     {      
         private static IWriter writer = new Writer();
 
-        private static ISnake snake = new Snake(writer);
+        private static ISnake snake = new Implementations.Snake(writer);
 
-        private static IScore score = new Score();
+        private static IScore score = new Score(writer);
 
         private static IGameSpeed speed = new GameSpeed();
 
@@ -16,11 +17,11 @@ namespace Snake
 
         public static void Main()
         {
-            Game game = new Game(snake, writer, score, speed, board);
+            IGame game = new Game(snake, writer, score, speed, board);
             RunGame(game);            
         }
 
-        private static void RunGame(Game game)
+        private static void RunGame(IGame game)
         {
             game.Run();
         } 

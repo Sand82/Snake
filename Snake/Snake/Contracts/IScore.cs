@@ -6,11 +6,9 @@ namespace Snake.Contracts
     {
         public void AddScore(int points);
 
-        public int GetScore();
+        public int GetScore();        
 
-        public int GetXScorePosition();
-
-        public int GetYScorePosition();
+        public void PrintScoreInPosition();
 
         public int GetFoodPoints();
 

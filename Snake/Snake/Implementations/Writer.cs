@@ -1,6 +1,6 @@
 ﻿using Snake.Contracts;
 
-namespace Snake
+namespace Snake.Implementations
 {
     public class Writer : IWriter
     {
@@ -12,17 +12,17 @@ namespace Snake
         public void PrintInConsole(char symbol, int xPosition, int yPosition)
         {
             Console.SetCursorPosition(xPosition, yPosition);
-            Console.Write(symbol);           
+            Console.Write(symbol);
         }
 
         public void SetCursorPosition(int left, int right)
         {
-            Console.SetCursorPosition(left, right);            
+            Console.SetCursorPosition(left, right);
         }
 
         public void Write(char symbol)
         {
-            Console.Write(symbol);            
+            Console.Write(symbol);
         }
 
         public void Write(string symbol)
@@ -45,7 +45,7 @@ namespace Snake
         {
             var info = Console.ReadKey(true);
 
-            return info.Key;            
+            return info.Key;
         }
     }
 }

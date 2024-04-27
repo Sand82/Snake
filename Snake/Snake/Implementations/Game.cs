@@ -1,13 +1,13 @@
 ﻿using Snake.Contracts;
 
-namespace Snake
-{  
+namespace Snake.Implementations
+{
     public class Game : IGame
     {
         private const string right = "Right";
         private const string left = "Left";
         private const string up = "Up";
-        private const string down = "Down";       
+        private const string down = "Down";
 
         private List<Food> foods = new();
 
@@ -32,37 +32,37 @@ namespace Snake
             this.score = score;
             this.speed = speed;
             this.board = board;
-        }       
+        }
 
         public void Run()
         {
             board.DrawBorders("test test");
 
-            writer.PrintInConsole('@', snake.GetHead().xPosition, snake.GetHead().yPosition);                    
+            writer.PrintInConsole('@', snake.GetHead().xPosition, snake.GetHead().yPosition);
 
             while (isGameOver != true)
             {
                 GamePipeLine();
-            }            
+            }
 
-            writer.WriteInPosition(score.GetXScorePosition(), score.GetYScorePosition(), String.Format("Final Score is: {0}", score.GetScore()));
-            writer.WriteInPosition(0,32, "Game Over!");            
+            score.PrintScoreInPosition();
+            writer.WriteInPosition(0, 32, "Game Over!");
         }
 
         private void GamePipeLine()
         {
-            var oldDirection = string.Empty;           
+            var oldDirection = string.Empty;
 
             while (isGameOver != true)
             {
-                writer.WriteInPosition(score.GetXScorePosition(), score.GetYScorePosition(), String.Format("Score is: {0}", score.GetScore()));
+                score.PrintScoreInPosition();
 
                 score.AddScore(score.GetTurnPoints());
 
-                oldDirection = direction;                
+                oldDirection = direction;
 
                 while (foods.Count < 10)
-                {                    
+                {
                     SetFood();
                 }
 
@@ -87,7 +87,7 @@ namespace Snake
                 var nextYPosition = GetNextStep(snake.GetHead().yPosition, yValue);
 
                 isGameOver = board.ValidateNextStep(nextXPosition, nextYPosition);
-                
+
                 CheckForEatenFood(nextXPosition, nextYPosition);
 
                 var checkSnakeForSelfBite = snake.CheckSnakeForSelfBite();
@@ -104,14 +104,14 @@ namespace Snake
 
         private bool CheckForFoodOverride(int foodXPosition, int foodYPosition)
         {
-            return foods.Any(food => food.xPosition == foodXPosition && food.yPosition == foodYPosition);            
+            return foods.Any(food => food.xPosition == foodXPosition && food.yPosition == foodYPosition);
         }
 
-        private void ValidateDirection(ConsoleKey key , string oldDirection)
+        private void ValidateDirection(ConsoleKey key, string oldDirection)
         {
             if (oldDirection == left && key == ConsoleKey.RightArrow)
             {
-                direction = left;                
+                direction = left;
             }
 
             if (oldDirection == right && key == ConsoleKey.LeftArrow)
@@ -129,7 +129,7 @@ namespace Snake
                 direction = down;
             }
         }
-        
+
         private void CheckForEatenFood(int nextXPosition, int nextYPosition)
         {
             foreach (var food in foods)
@@ -137,17 +137,17 @@ namespace Snake
                 if (nextXPosition == food.xPosition && nextYPosition == food.yPosition)
                 {
                     foods.Remove(food);
-                    snake.AddBodyElement(food.xPosition, food.yPosition);                    
+                    snake.AddBodyElement(food.xPosition, food.yPosition);
                     score.AddScore(score.GetFoodPoints());
                     break;
                 }
-            }            
-        }        
+            }
+        }
 
         private int GetNextStep(int headPosition, int step)
         {
             return step + headPosition;
-        }        
+        }
 
         private (int, int) GetNewPosition(string direction)
         {
@@ -167,9 +167,9 @@ namespace Snake
             return (tokens[1], tokens[0]);
         }
 
-        private void GetSnakeDirection( ConsoleKey key)
+        private void GetSnakeDirection(ConsoleKey key)
         {
-            if (key == ConsoleKey.UpArrow )
+            if (key == ConsoleKey.UpArrow)
             {
                 direction = up;
             }
@@ -184,7 +184,7 @@ namespace Snake
             else if (key == ConsoleKey.RightArrow)
             {
                 direction = right;
-            };            
+            };
         }
 
         private void SetFood()
@@ -206,7 +206,7 @@ namespace Snake
                 writer.PrintInConsole(food.foodSymbol, xValue, yValue);
 
                 foods.Add(food);
-            }           
+            }
         }
     }
 }
