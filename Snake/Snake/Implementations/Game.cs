@@ -38,7 +38,7 @@ namespace Snake.Implementations
 
         public void Run()
         {
-            board.DrawBorders("start game");
+            board.DrawBorders("test game");
 
             writer.PrintInConsole('@', snake.GetHead().xPosition, snake.GetHead().yPosition);
 
@@ -55,7 +55,7 @@ namespace Snake.Implementations
         {
             var oldDirection = string.Empty;
 
-            while (isGameOver != true)
+            while (!isGameOver)
             {
                 score.PrintScoreInPosition();
 

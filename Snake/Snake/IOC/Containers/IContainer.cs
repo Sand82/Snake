@@ -6,6 +6,10 @@
 
         public void CreateMapping<TInterfaceType, TImplementationType>();
 
-        public Type GetMapping(Type interfaceType);        
+        public void CreateMapping<TInterfaceType, TImplementationType>(Func<object> creationFunc);
+
+        public Type GetMapping(Type interfaceType);
+
+        public KeyValuePair<Type, Func<object>> GetCustomMapping(Type interfaceType);
     }
 }

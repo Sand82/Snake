@@ -40,12 +40,20 @@ namespace Snake.IOC
 
                 foreach (ParameterInfo parameterInfo in parametersInfo) 
                 {
-                   Type implementationType = container.GetMapping(parameterInfo.ParameterType);
+                    Type interfaceType = parameterInfo.ParameterType;
+                    Type implementationType = container.GetMapping(interfaceType);
+                    object? implementationInstance = null;
 
-                    MethodInfo injectMethod = typeof(Injector).GetMethod("Inject")!;
-                    injectMethod = injectMethod.MakeGenericMethod(implementationType);
-
-                    object? implementationInstance = injectMethod.Invoke(this, new object[] { });
+                    if (implementationType == null) 
+                    {
+                        var implementationPair = container.GetCustomMapping(interfaceType);
+                        implementationInstance = implementationPair.Value();
+                    }
+                    else
+                    {
+                        implementationInstance = CallGenericMethod(typeof(Injector));                        
+                    }
+                    
                     constructorParamObjects[i++] = implementationInstance!;
                 }
 
@@ -58,6 +66,14 @@ namespace Snake.IOC
         private bool HasConstructorInjection<TClass>()
         {
             return typeof(TClass).GetConstructors().Any(c => c.GetCustomAttributes(typeof(Inject), true).Any());
+        }
+
+        private object CallGenericMethod(Type type)
+        {
+            MethodInfo injectMethod = type.GetMethod("Inject")!;
+            injectMethod = injectMethod.MakeGenericMethod(type);
+
+            return injectMethod.Invoke(this, new object[] { })!;
         }
     }
 }
