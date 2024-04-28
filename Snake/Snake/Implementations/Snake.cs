@@ -1,5 +1,5 @@
 ﻿using Snake.Contracts;
-using Snake.DI.Attributes;
+using Snake.IOC.Attributes;
 
 namespace Snake.Implementations
 {

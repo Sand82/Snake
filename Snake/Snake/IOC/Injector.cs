@@ -1,8 +1,8 @@
-﻿using Snake.DI.Attributes;
-using Snake.DI.Containers;
+﻿using Snake.IOC.Attributes;
+using Snake.IOC.Containers;
 using System.Reflection;
 
-namespace Snake.DI
+namespace Snake.IOC
 {
     public class Injector
     {
@@ -15,11 +15,10 @@ namespace Snake.DI
 
         public TClass Inject<TClass>() 
         {
-            //if (HasConstructorInjection<TClass>())
-            //{
-            //    return (TClass)Activator.CreateInstance(typeof(TClass))!;
-            //    //throw new ArgumentException("The class has no constructor annotated with [Inject] attribute.");
-            //}
+            if (!HasConstructorInjection<TClass>())
+            {
+                return (TClass)Activator.CreateInstance(typeof(TClass))!;                
+            }
 
             return CreateConstructorInjection<TClass>();
         }

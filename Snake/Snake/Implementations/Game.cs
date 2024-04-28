@@ -1,5 +1,5 @@
 ﻿using Snake.Contracts;
-using Snake.DI.Attributes;
+using Snake.IOC.Attributes;  
 
 namespace Snake.Implementations
 {
@@ -38,7 +38,7 @@ namespace Snake.Implementations
 
         public void Run()
         {
-            board.DrawBorders("test test");
+            board.DrawBorders("start game");
 
             writer.PrintInConsole('@', snake.GetHead().xPosition, snake.GetHead().yPosition);
 

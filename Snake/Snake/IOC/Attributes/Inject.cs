@@ -1,4 +1,4 @@
-﻿namespace Snake.DI.Attributes
+﻿namespace Snake.IOC.Attributes
 {
     [AttributeUsage(AttributeTargets.Constructor)]
     public class Inject : Attribute

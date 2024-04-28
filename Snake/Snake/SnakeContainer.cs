@@ -1,5 +1,5 @@
 ﻿using Snake.Contracts;
-using Snake.DI.Containers;
+using Snake.IOC.Containers;
 using Snake.Implementations;
 
 namespace Snake

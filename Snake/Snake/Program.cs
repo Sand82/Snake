@@ -1,5 +1,5 @@
-﻿using Snake.DI;
-using Snake.DI.Containers;
+﻿using Snake.IOC;
+using Snake.IOC.Containers;
 
 namespace Snake
 { 

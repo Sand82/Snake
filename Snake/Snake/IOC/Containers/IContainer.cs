@@ -1,4 +1,4 @@
-﻿namespace Snake.DI.Containers
+﻿namespace Snake.IOC.Containers
 {
     public interface IContainer
     {
