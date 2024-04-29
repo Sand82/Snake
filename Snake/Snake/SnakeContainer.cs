@@ -14,7 +14,7 @@ namespace Snake
             CreateMapping<IGameSpeed, GameSpeed>();
             CreateMapping<IBoard, Board>();
             CreateMapping<IGame, Game>();
-            CreateMapping<Engine, Engine>();
+            CreateMapping<Engine, Engine>();            
         }
     }
 }

@@ -39,7 +39,7 @@
         }
 
         public KeyValuePair<Type, Func<object>> GetCustomMapping(Type interfaceType)
-        {
+        { 
             return mappingsWithCustomCreation[interfaceType];
         }
 
