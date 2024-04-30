@@ -43,8 +43,7 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-28T18:53:12.234Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -57,8 +56,7 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-28T09:45:19.006Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -71,8 +69,7 @@
               "ViewState": "AQIAAAkAAAAAAAAAAAAqwB4AAAAyAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-28T09:45:24.458Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -82,7 +79,7 @@
               "RelativeDocumentMoniker": "Snake\\IOC\\Injector.cs",
               "ToolTip": "C:\\CSharp\\Snake\\Snake\\Snake\\IOC\\Injector.cs",
               "RelativeToolTip": "Snake\\IOC\\Injector.cs",
-              "ViewState": "AQIAABMAAAAAAAAAAAAiwCUAAABQAAAA",
+              "ViewState": "AQIAAC4AAAAAAAAAAAAuwCUAAABQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-28T18:54:27.902Z",
               "IsPinned": true,
@@ -98,8 +95,7 @@
               "RelativeToolTip": "Snake\\Engine.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-29T11:59:06.254Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-29T11:59:06.254Z"
             }
           ]
         }
