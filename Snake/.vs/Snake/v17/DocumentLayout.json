@@ -3,22 +3,6 @@
   "WorkspaceRootPath": "C:\\CSharp\\Snake\\Snake\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|c:\\csharp\\snake\\snake\\snake\\ioc\\injector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|solutionrelative:snake\\ioc\\injector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|c:\\csharp\\snake\\snake\\snake\\ioc\\containers\\abstractcontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|solutionrelative:snake\\ioc\\containers\\abstractcontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|c:\\csharp\\snake\\snake\\snake\\ioc\\containers\\icontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|solutionrelative:snake\\ioc\\containers\\icontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|c:\\csharp\\snake\\snake\\snake\\snakecontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|solutionrelative:snake\\snakecontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|c:\\csharp\\snake\\snake\\snake\\engine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EA996A61-5E26-416E-ACD1-2AA31979B9EF}|Snake\\Snake.csproj|solutionrelative:snake\\engine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -30,64 +14,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "SnakeContainer.cs",
-              "DocumentMoniker": "C:\\CSharp\\Snake\\Snake\\Snake\\SnakeContainer.cs",
-              "RelativeDocumentMoniker": "Snake\\SnakeContainer.cs",
-              "ToolTip": "C:\\CSharp\\Snake\\Snake\\Snake\\SnakeContainer.cs",
-              "RelativeToolTip": "Snake\\SnakeContainer.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAsAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-28T18:53:12.234Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IContainer.cs",
-              "DocumentMoniker": "C:\\CSharp\\Snake\\Snake\\Snake\\IOC\\Containers\\IContainer.cs",
-              "RelativeDocumentMoniker": "Snake\\IOC\\Containers\\IContainer.cs",
-              "ToolTip": "C:\\CSharp\\Snake\\Snake\\Snake\\IOC\\Containers\\IContainer.cs",
-              "RelativeToolTip": "Snake\\IOC\\Containers\\IContainer.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAaAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-28T09:45:19.006Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AbstractContainer.cs",
-              "DocumentMoniker": "C:\\CSharp\\Snake\\Snake\\Snake\\IOC\\Containers\\AbstractContainer.cs",
-              "RelativeDocumentMoniker": "Snake\\IOC\\Containers\\AbstractContainer.cs",
-              "ToolTip": "C:\\CSharp\\Snake\\Snake\\Snake\\IOC\\Containers\\AbstractContainer.cs",
-              "RelativeToolTip": "Snake\\IOC\\Containers\\AbstractContainer.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAqwB4AAAAyAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-28T09:45:24.458Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Injector.cs",
-              "DocumentMoniker": "C:\\CSharp\\Snake\\Snake\\Snake\\IOC\\Injector.cs",
-              "RelativeDocumentMoniker": "Snake\\IOC\\Injector.cs",
-              "ToolTip": "C:\\CSharp\\Snake\\Snake\\Snake\\IOC\\Injector.cs",
-              "RelativeToolTip": "Snake\\IOC\\Injector.cs",
-              "ViewState": "AQIAAC4AAAAAAAAAAAAuwCUAAABQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-28T18:54:27.902Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "Engine.cs",
               "DocumentMoniker": "C:\\CSharp\\Snake\\Snake\\Snake\\Engine.cs",
               "RelativeDocumentMoniker": "Snake\\Engine.cs",
@@ -95,7 +26,8 @@
               "RelativeToolTip": "Snake\\Engine.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-29T11:59:06.254Z"
+              "WhenOpened": "2024-04-29T11:59:06.254Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -2,9 +2,13 @@
 using Snake.IOC.Attributes;
 
 namespace Snake.Implementations
-{
+{  
     public class Snake : ISnake
     {
+        private const int startingPositionX = 40;
+
+        private const int startingPositionY = 15;
+
         private IWriter writer;
 
         private SnakePart? teal;
@@ -22,7 +26,7 @@ namespace Snake.Implementations
 
             if (head == null)
             {
-                var head = new SnakePart(40, 15);
+                var head = new SnakePart(startingPositionX, startingPositionY);
                 this.head = head;
                 teal = head;
                 body.Add(count, head);
